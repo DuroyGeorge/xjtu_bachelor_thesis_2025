@@ -23,6 +23,8 @@
    1. 创建本项目
    2. 左上角点击Menu，Compiler选择XeLaTeX
    3. 回到主页面点击Recompile
+
+   作者使用Free Plan编译会超时，建议借用学校/研究所/课题组等私有化部署的Overleaf服务器或者付费的Overleaf服务。
 2. 本地环境下XeLaTeX+biber。这是作者构建模版时使用的方式
 
 # 写作提示
