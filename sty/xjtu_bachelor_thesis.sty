@@ -1,0 +1,267 @@
+%===========================================
+% 整体设置
+%============================================
+\ProvidesPackage{sty/xjtu_bachelor_thesis}[2025/06/01 v1.0 西安交大毕设模板]
+
+%—— 1. 设置 A4 纸张和页边距 —————————————————————————
+\RequirePackage[a4paper, 
+    left=2.6cm,   % 左边距 2.6cm
+    right=2.6cm,  % 右边距 2.6cm
+    top=2cm,    % 上边距 2cm
+    bottom=1.78cm,  % 等效下边距 2.5cm
+    bindingoffset=0cm,   % 绑定线偏移量0
+    includehead,
+    includefoot,
+    footskip=0.96cm
+]{geometry}
+\RequirePackage{amsmath}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{listings}
+\RequirePackage{pdfpages}
+\graphicspath{{figures/}}
+
+%—— 2. 字体 & 行距 & 段落 —————————————————————————
+\RequirePackage{fontspec}   % 英文/西文字体管理
+\RequirePackage{xeCJK}      % 中文管理（XeLaTeX 专用）
+
+% 设置英文字体为 Times New Roman
+\setmainfont{Times New Roman.ttf}
+
+% 设置中文主字体为 宋体 (SimSun)
+\setCJKmainfont[AutoFakeBold]{SimSun.ttf}
+
+% 全文 1.2 倍行距
+\linespread{1.13} %等效1.2倍行距
+
+\setlength{\parskip}{0pt}
+
+%—— 3. 定义中文常用字号命令 —————————————————————————
+% 三号 (16pt)
+\newcommand{\sanhao}{\fontsize{16pt}{\baselineskip}\selectfont}
+
+% 小三 (15pt)
+\newcommand{\xiaosanhao}{\fontsize{15pt}{\baselineskip}\selectfont}
+
+% 四号 (14pt)
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}
+
+% 小四 (12pt) —— 用作正文
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}
+
+% 五号 (10.5pt)
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}
+
+% 小五 (9pt)
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}
+
+% —— 强制把 \normalsize 改成“小四号” ————————————————————
+\renewcommand\normalsize{\xiaosihao}
+
+
+\RequirePackage{titlesec}
+
+%—— 4. “一级标题”（章标题）的样式 —————————————————————————————
+\titleformat{\chapter}[hang]
+  {%
+    \centering                 % 居中
+    \sanhao                    % 三号字
+  }
+  {\thechapter}       % 前缀：第 N 章
+  {0.83em}                       % 编号和标题正文之间空 1em
+  {}                          % 标题本身前面不额外插入内容
+\titlespacing{\chapter}{0pt}{0.55em}{1.2em}
+\let\cleardoublepage\clearpage
+
+%—— 5. “二级标题”（节标题）的样式 —————————————————————————————
+\titleformat{\section}[hang]
+  {%
+    \xiaosanhao                 % 小三号 (15pt) 
+    \raggedright               % 左对齐（不自动换行缩进）
+  }
+  {\thesection}               % 编号：例如 “1.1”、“2.3” 之类
+  {0.25em}                       % 编号和标题正文之间空 1em
+  {}                          % 标题正文前不插入内容
+\titlespacing{\section}{0pt}{1.1em}{0.65em}
+
+%—— 6. “三级标题”（小节标题）的样式 ————————————————————————————
+\titleformat{\subsection}[hang]
+  {%
+    \sihao                     % 四号字 (14pt)
+  }
+  {\thesubsection}            % “1.1.1” 这种编号形式
+  {0.25em}                       % 编号与正文之间空 1em
+  {}                          
+\titlespacing{\subsection}{2.0em}{0.5em}{0.1em}
+
+%—— 7. 页眉页脚（fancyhdr） ————————————————————————
+\RequirePackage{fancyhdr}
+% 先清空默认的 header 和 footer
+\pagestyle{fancy}
+\fancyhf{}
+
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\thechapter\hspace{0.83em}#1}{}%
+}
+
+% 设定页眉内容（举例：偶数页左侧显示“论文题目”，奇数页右侧显示章节名）
+\fancyhead[CE]{\wuhao 西安交通大学本科毕业设计（论文）}    
+\fancyhead[CO]{\wuhao\leftmark}{}   
+% 如果你要页脚底部显示页码
+\fancyfoot[LE,RO]{\xiaowuhao \thepage}
+
+% 调整页眉到正文之间的空白
+\setlength{\headsep}{0.36cm}  
+
+\setlength{\headheight}{6.5mm}  
+
+\renewcommand{\headrule}{%
+  \vskip 0.7mm
+  \hrule width\headwidth \headheight 0.1mm \vskip 0.15mm   % 第一条线
+  \hrule width\headwidth \headheight 0.1mm              % 第二条线，紧接在第一条线下方
+}
+
+\fancypagestyle{plain}{%
+\fancyhf{}
+
+% 设定页眉内容（举例：偶数页左侧显示“论文题目”，奇数页右侧显示章节名）
+\fancyhead[CE]{\wuhao 西安交通大学本科毕业设计（论文）}    
+\fancyhead[CO]{\wuhao\leftmark}   
+% 如果你要页脚底部显示页码
+\fancyfoot[LE,RO]{\xiaowuhao \thepage}
+
+% 调整页眉到正文之间的空白
+\setlength{\headsep}{0.36cm}  
+
+\setlength{\headheight}{6.5mm}  
+
+\renewcommand{\headrule}{%
+  \vskip 0.7mm
+  \hrule width\headwidth \headheight 0.1mm \vskip 0.15mm   % 第一条线
+  \hrule width\headwidth \headheight 0.1mm              % 第二条线，紧接在第一条线下方
+}
+}
+
+
+%=============================================
+%图
+%=============================================
+\RequirePackage{caption}
+\RequirePackage[hang]{subfigure}						% 图形或表格并排排列
+
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thesubfigure}{(\alph{subfigure})}
+
+\DeclareCaptionLabelFormat{cnfig}{#1\hspace{0.5em}#2\hspace{1em}}
+\DeclareCaptionFont{wuhao}{\wuhao}
+
+% % % 2. 对所有 figure 环境使用这个格式，并去掉自动的冒号之类分隔符
+\captionsetup[figure]{%
+  labelformat=cnfig,  % 用我们刚刚定义的格式
+  labelsep=none,       % 不要默认的 ":" 或 "." 分隔
+  font=wuhao,
+  labelfont=wuhao,
+  skip=0pt,
+  belowskip=-7.5pt
+}
+
+% 1. 浮动体与正文之间的空白设为 0.5 行
+\setlength{\intextsep}{0.65\baselineskip}    % 针对 [h] 或 [H] 插入的 figure
+\setlength{\textfloatsep}{0.65\baselineskip} % 针对顶部/底部的浮动
+
+
+%=============================================
+%表
+%=============================================
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+\DeclareCaptionLabelFormat{tablabel}{#1#2\hspace{0.5em}}  % #2 是编号，这里自动在编号后加一个半角空格
+\captionsetup[table]{%
+  labelformat=tablabel,   % 用上面定义的格式
+  labelsep=none,          % 不要默认的冒号或点号
+  font=wuhao,      % 整个表标题（含“表 1-1”+说明）用小五号
+  labelfont=wuhao,  % “表 1-1”部分也用小五号
+  skip=2pt,
+  belowskip=-2pt
+}
+
+%=============================================
+%公式
+%=============================================
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+% 保持公式上下间距与正文行距一致
+\setlength{\abovedisplayshortskip}{10pt}
+\setlength{\belowdisplayshortskip}{10pt}
+
+%=============================================
+%目录
+%=============================================
+\let\c@lofdepth\relax
+\let\c@lotdepth\relax
+\RequirePackage{tocloft}
+\RequirePackage{setspace}
+\RequirePackage{etoolbox}
+
+% ===== 确保目录从奇数页开始 =====
+\pretocmd{\tableofcontents}{\cleardoublepage}{}{}
+
+% ===== 目录标题设置 =====
+% 设置标题格式：居中、三号宋体、字间距
+\renewcommand{\cfttoctitlefont}{\hfil\sanhao}
+\renewcommand{\contentsname}{目\hspace{1em}录} % 字间空两个半角字符
+
+% 设置标题间距：段前2行，段后1行
+\setlength{\cftbeforetoctitleskip}{0.48\baselineskip}
+\setlength{\cftaftertoctitleskip}{0.8\baselineskip}
+
+% ===== 目录内容全局设置 =====
+\setlength{\cftbeforechapskip}{0pt} % 控制条目间距
+\renewcommand{\cftsecafterpnum}{\vspace{0pt}}
+\renewcommand{\cftsubsecafterpnum}{\vspace{0pt}}
+\renewcommand{\cftsubsubsecafterpnum}{\vspace{0pt}}
+
+% 解决文字分散问题：设置合理的缩进和编号宽度
+\cftsetindents{chapter}{0pt}{0.5em}       % 零级标题编号宽度减小为0.5em
+\cftsetindents{section}{1.3em}{1em}       % 一级标题缩进
+\cftsetindents{subsection}{2.5em}{1em}  % 二级标题缩进
+
+% 自定义更密集的点导引线
+\renewcommand{\cftdot}{.}
+\renewcommand{\cftdotsep}{0.1}  % 点之间的距离，默认是4.5，设为1表示更密集
+
+\ctexset{
+  chapter = {
+    name = {},                      % 不要“第”和“章”
+    number = \arabic{chapter},      % 只用阿拉伯数字
+    format = \centering\sanhao,     % 仅示例（你可以换成想要的格式）
+  }
+}
+% ===== 零标题设置 =====
+% 字体：小四号宋体，紧凑靠左
+\renewcommand{\cftchapfont}{\xiaosihao\raggedright}
+% 页码：Times New Roman，右对齐
+\renewcommand{\cftchappagefont}{\xiaosihao}
+% 标题与页码间自动填充连线
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+% ===== 一级标题设置 =====
+% 字体：小四号宋体，紧凑靠左
+\renewcommand{\cftsecfont}{\xiaosihao\raggedright}
+% 页码：Times New Roman，右对齐
+\renewcommand{\cftsecpagefont}{\xiaosihao}
+% 标题与页码间自动填充连线
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% ===== 二级标题设置 =====
+% 字体：小四号宋体
+\renewcommand{\cftsubsecfont}{\xiaosihao\raggedright}
+% 页码：Times New Roman，右对齐
+\renewcommand{\cftsubsecpagefont}{\xiaosihao}
+% 自动填充连线
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\setcounter{tocdepth}{2}
+
+\endinput

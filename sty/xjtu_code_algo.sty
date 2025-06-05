@@ -1,0 +1,75 @@
+%====================================================
+% xjtu_code_algo.sty —— 西安交通大学本科论文代码与算法格式
+% ===================================================
+% 版本：2025/06/04 v1.0
+% 说明：该 .sty 文件统一定义了代码（listings）与算法（algorithm2e）的环境与样式，
+% 方便在论文中插入源代码与伪代码。
+\ProvidesPackage{sty/xjtu_code_algo}[2025/06/04 v1.0 代码与算法样式]
+
+% —— 依赖宏包 —————————————————————————
+\RequirePackage{listings}      % 代码高亮
+\RequirePackage{xcolor}        % 颜色支持
+\RequirePackage[plainruled,linesnumbered,algochapter]{algorithm2e} % 算法伪代码环境
+
+% —— 1. 代码环境设置（listings）—————————————————————
+% 1.2 定义代码高亮配色
+\definecolor{codegray}{RGB}{255,255,255}    % 背景灰
+\definecolor{keywordcolor}{RGB}{0,0,128}    % 关键字颜色（深蓝）
+\definecolor{commentcolor}{RGB}{0,128,0}     % 注释颜色（绿色）
+\definecolor{stringcolor}{RGB}{163,21,21}    % 字符串颜色（棕红）
+
+% 1.3 全局 lstlisting 配置
+\lstset{
+  backgroundcolor=\color{codegray},  % 背景色
+  basicstyle=\wuhao,    % 代码字体：小五号等宽
+  lineskip=1pt,
+  keywordstyle=\color{keywordcolor}, % 关键字样式
+  commentstyle=\color{commentcolor},  % 注释样式
+  stringstyle=\color{stringcolor},     % 字符串样式
+  numbers=left,                          % 左侧显示行号
+  numberstyle=\xiaowuhao\color{black!60}, % 行号字体
+  stepnumber=1,                          % 每行都显示行号
+  numbersep=10pt,                        % 行号与代码间隔
+  tabsize=2,                             % 制表符宽度为2个空格
+  showstringspaces=false,                % 不特殊显示字符串中的空格
+  breaklines=true,                       % 自动换行
+  breakatwhitespace=false,               % 允许在任何字符处换行
+  frame=lines,                           % 代码区加边框
+  rulecolor=\color{black!70},            % 边框颜色
+  captionpos=b,                          % 标题位置在底部
+  xleftmargin=2em,                       % 左边距
+  xrightmargin=2em,                      % 右边距
+}
+
+\renewcommand\lstlistingname{代码}
+% 修改代码编号格式，使用连字符(-)替代点号(.)
+% 使用\AtBeginDocument确保listings包完全加载后再修改计数器
+\AtBeginDocument{%
+  \renewcommand{\thelstlisting}{\thechapter-\arabic{lstlisting}}
+  % 修改listings标签与内容之间的间距
+  \captionsetup[lstlisting]{labelsep=quad,font=wuhao}  % 使用quad（1em）作为间距
+}
+
+% —— 2. 算法环境设置（algorithm2e）—————————————————————
+% 2.1 统一算法标题字体与字号
+%    使用小四号（12pt），宋体加粗
+\SetAlCapFnt{\wuhao}
+\SetAlCapNameFnt{\wuhao}
+\SetAlFnt{\wuhao}
+% 2.2 设置算法环境的全局参数
+\SetKwInOut{Input}{输入}% 输入
+\SetKwInOut{Output}{输出}% 输出
+\SetKw{KwInit}{初始化}% 初始化
+\SetKw{KwPara}{参数}% 参数
+\SetKwBlock{Begin}{begin}{end}% begin...end
+\SetAlgorithmName{算法}{算法}% 中英文标题
+
+\SetNlSkip{1em}% 行号与算法语句之间间距
+
+
+\renewcommand{\algocf@captiontext}[2]{\wuhao#1\algocf@typo ~ #2}
+\renewcommand\thealgocf{\csname the\algocf@within\endcsname-\@arabic\c@algocf}
+\SetAlCapSty{textrm}
+\SetAlCapSkip{1ex}
+
+\endinput

@@ -1,0 +1,34 @@
+\AbstractTitleCN
+
+近年来，随着大语言模型（LLM）和智能代理（Agent）技术的迅猛发展，人工智能系统对高性能、弹性和可扩展计算架构的需求日益增长。大语言模型及其驱动的Agent系统已广泛应用多个领域，极大推动了智能化应用的边界。然而，尽管当前Agent系统在推理加速、内存优化、检索效率等方面取得了显著进展，主流优化手段多局限于单机环境，未能充分发挥分布式计算在资源利用、负载均衡和容错等方面的潜力。将单机Agent程序迁移到分布式环境，面临计算图分割、状态一致性、动态调度和容错恢复等一系列复杂挑战，尤其在高并发、低延迟和大规模异构资源环境下，传统方法难以满足实际需求。
+
+针对上述问题，本文提出了一种创新的自适应分布式化框架，实现了从单机程序到分布式系统的自动、透明、高性能迁移。该框架以静态分析和抽象语法树为基础，识别原子函数及其依赖关系，构建加权有向无环图（DAG），并结合资源消耗与调用频率，通过自适应聚类算法将函数划分为分布式模块。框架采用编译时静态优化与运行时动态调度相结合的机制，支持自动部署、负载均衡与弹性伸缩。执行器采用无状态设计，支持高并发、异步与同步函数的高效执行，并实现透明的远程调用。为提升系统的健壮性和可维护性，框架还集成了多层次的故障检测与恢复机制，包括健康检查、自动重启、状态恢复和请求重试，确保分布式系统在节点失效情况下依然能够稳定运行。
+  
+本文选取了典型Agent应用场景，系统性地评估了所提框架的性能表现。实验结果表明，所提方案在系统吞吐量、响应延迟和跨模块通信量等核心指标上均显著优于传统单机部署和静态分布式划分方法。进一步的性能分析显示，基于资源感知的模块划分算法能够有效减少分布式环境下的网络通信开销，提升整体系统效率。同时，透明的分布式调用机制保证了应用代码在迁移前后的高度一致性，极大降低了开发者的学习和维护成本。
+  
+本研究不仅为Agent应用提供了低成本、高性能的分布式解决方案，也为分布式系统自动化与智能化演进提供了理论与实践基础。
+
+\vspace{\baselineskip}
+\noindent
+\textbf{关\ \ 键\ \ 词：} 自适应分布式计算；函数依赖分析；资源感知调度；透明分布式化；大语言模型Agent
+
+\AbstractTitleEN
+
+\noindent
+With the rapid development of Large Language Models (LLMs) and Agent technologies, AI systems increasingly require high-performance, elastic computing architectures. Despite advances in inference acceleration and memory optimization, mainstream Agent optimizations remain limited to single-machine environments, failing to leverage distributed computing's potential. Migrating single-machine Agent programs to distributed environments presents challenges in computation graph partitioning, state consistency, and fault recovery.
+\vspace{\baselineskip}
+
+\noindent
+This paper proposes an adaptive distributed framework enabling automatic, transparent migration from single-machine programs to distributed systems. The framework identifies atomic functions through static analysis, constructs weighted DAGs, and partitions functions into distributed modules using an adaptive clustering algorithm. It combines compile-time optimization with runtime scheduling, supports efficient execution of both synchronous and asynchronous functions, and integrates multi-level fault detection mechanisms.
+\vspace{\baselineskip}
+  
+\noindent
+Experiments on typical Agent scenarios demonstrate the framework's superior performance in throughput, latency, and cross-module communication compared to traditional deployments. The resource-aware module partitioning algorithm effectively reduces network communication overhead while transparent distribution mechanisms ensure code consistency, significantly lowering development costs.
+\vspace{\baselineskip}
+  
+\noindent
+This research provides both a cost-effective distributed solution for Agent applications and theoretical foundations for the evolution of distributed systems.
+\vspace{\baselineskip}
+
+\noindent
+\textbf{KEY WORDS:} Adaptive distributed computing; Function dependency analysis; Resource-aware scheduling; Transparent distribution; LLM agents

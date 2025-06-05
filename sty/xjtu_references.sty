@@ -1,0 +1,96 @@
+%=============================================
+% xjtu_reference.sty —— 西安交通大学本科论文“参考文献”格式 (GB/T 7714-2015)
+%=============================================
+\ProvidesPackage{sty/xjtu_references}[2025/06/02 v1.0 参考文献格式]
+
+%—— 1. 加载 biblatex 并指定 GB/T 7714-2015 风格 ————————————————————
+\RequirePackage[backend=biber,        % 用 biber 做后端
+                style=gb7714-2015,    % 国家标准 GB/T 7714-2015
+                citestyle=gb7714-2015, % 引文样式也用 GB/T 7714-2015（如内文引用）
+                hyperref=true,
+                sorting=none,
+                sortcites=true,
+               ]{biblatex}
+
+% 下面这一行将你的 .bib 文件加入库中，你可以改成自己项目里 .bib 的路径
+\addbibresource{bib/references.bib}
+
+\DeclareFieldFormat{labelnumber}{#1}
+
+\DeclareFieldFormat{citenum}{\mkbibsuperscript{[#1]}}
+
+%—— 2. 定义“参考文献”标题格式 ————————————————————————————
+%      要求：居中编排“参考文献”四字（三号宋体），段前 2 行，段后 1 行，行距 1.2 倍
+
+\newcommand{\RefTitleCN}{%
+  {%
+    \par % 新段
+    \vspace*{2\baselineskip}% 段前 2 行（当前基线是正文字号，若需要精确 2×三号行高，可用 2×(16pt×1.2)≈38.4pt）
+    \begin{center}%
+      \sanhao
+      参考文献       
+    \end{center}%
+    \vspace{1\baselineskip}% 段后 1 行
+  }%
+}
+
+%—— 3. 设置参考文献条目字体（五号宋体+Times New Roman，行距 1.2 倍） ——————————
+%      GB/T 7714-2015 本身由 biblatex 管理著录格式，但我们要把输出字体都设为五号
+
+% 这里重定义 biblatex 在打印参考文献时用的字体
+\AtBeginBibliography{%
+  \wuhao\selectfont            % 五号（10.5pt）宋体
+  \setlength{\baselineskip}{1.5em}
+  % 自定义姓名格式：姓首字母大写，姓和名之间只有空格，名字后面不带点
+  \DeclareNameFormat{sortname}{%
+    % 处理姓氏（首字母大写）
+    \nameparts{#1}%
+    \mkbibnameprefix{\namepartprefix}%
+    \mkbibnamefamily{\MakeSentenceCase{\namepartfamily}}%
+    % 处理名字（不带点）
+    \ifdefvoid{\namepartgiven}
+      {}
+      {\addspace\mkbibnamegiven{\namepartgiveni}}% 只加空格，不加逗号和点
+    % 处理后缀（如果有）
+    \ifdefvoid{\namepartsuffix}
+      {}
+      {\addcomma\space\mkbibnamesuffix{\namepartsuffix}}%
+    % 多名作者间的分隔符
+    \ifnumequal{\value{listcount}}{\value{liststop}}
+      {}
+      {\addcomma\space}% 作者之间用逗号加空格
+  }
+  \DeclareNameAlias{default}{sortname}
+  \DeclareNameAlias{author}{sortname}
+  % 确保缩写（首字母）后面不带点
+  \renewcommand*{\bibinitperiod}{}
+  \renewcommand*{\bibinitdelim}{}
+}
+
+%—— 4. 取消 biblatex 默认的标题，让我们手动插入 \RefTitleCN ———————
+% biblatex 默认输出会在 \printbibliography 时自带 “References” 之类标题，
+% 我们要去掉这个自动标题，用上面的 \RefTitleCN 来取代。
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{0em}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{0pt}%   % 条目之间不留额外空白
+      \setlength{\parsep}{0pt}%    % 条目段落间距
+      \setlength{\parskip}{0pt}%   % 段间不留空行
+      \setlength{\topsep}{0pt}%    % 列表上方空白
+      \setlength{\partopsep}{0pt}%
+      \renewcommand*{\makelabel}[1]{##1\hss}}%
+   \renewcommand*{\finentrypunct}{}%  去掉默认句点
+   \sloppy                         % 使行尾对齐更灵活
+   \clubpenalty = 10000
+   \widowpenalty = 10000
+   \sfcode`\.=1000}
+  {\endlist}
+  {\item}
+
+\endinput
