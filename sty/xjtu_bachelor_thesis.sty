@@ -8,11 +8,11 @@
     left=2.6cm,   % 左边距 2.6cm
     right=2.6cm,  % 右边距 2.6cm
     top=2cm,    % 上边距 2cm
-    bottom=1.78cm,  % 等效下边距 2.5cm
+    bottom=1.4cm,  % 等效下边距 2.5cm
     bindingoffset=0cm,   % 绑定线偏移量0
     includehead,
     includefoot,
-    footskip=0.96cm
+    footskip=0.9cm
 ]{geometry}
 \RequirePackage{amsmath}
 \RequirePackage{graphicx}
@@ -108,7 +108,7 @@
 \fancyhead[CE]{\wuhao 西安交通大学本科毕业设计（论文）}    
 \fancyhead[CO]{\wuhao\leftmark}{}   
 % 如果你要页脚底部显示页码
-\fancyfoot[LE,RO]{\xiaowuhao \thepage}
+\fancyfoot[LE,RO]{\raisebox{0.38cm}{\xiaowuhao \thepage}}
 
 % 调整页眉到正文之间的空白
 \setlength{\headsep}{0.36cm}  
@@ -128,7 +128,7 @@
 \fancyhead[CE]{\wuhao 西安交通大学本科毕业设计（论文）}    
 \fancyhead[CO]{\wuhao\leftmark}   
 % 如果你要页脚底部显示页码
-\fancyfoot[LE,RO]{\xiaowuhao \thepage}
+\fancyfoot[LE,RO]{\raisebox{0.38cm}{\xiaowuhao \thepage}}
 
 % 调整页眉到正文之间的空白
 \setlength{\headsep}{0.36cm}  

@@ -39,6 +39,8 @@
   captionpos=b,                          % 标题位置在底部
   xleftmargin=2em,                       % 左边距
   xrightmargin=2em,                      % 右边距
+  aboveskip=25pt,
+  belowskip=6pt,
 }
 
 \renewcommand\lstlistingname{代码}
@@ -47,7 +49,7 @@
 \AtBeginDocument{%
   \renewcommand{\thelstlisting}{\thechapter-\arabic{lstlisting}}
   % 修改listings标签与内容之间的间距
-  \captionsetup[lstlisting]{labelsep=quad,font=wuhao}  % 使用quad（1em）作为间距
+  \captionsetup[lstlisting]{labelsep=quad,font=wuhao,belowskip=0pt,aboveskip=0pt}  % 使用quad（1em）作为间距
 }
 
 % —— 2. 算法环境设置（algorithm2e）—————————————————————
@@ -63,8 +65,10 @@
 \SetKw{KwPara}{参数}% 参数
 \SetKwBlock{Begin}{begin}{end}% begin...end
 \SetAlgorithmName{算法}{算法}% 中英文标题
-
 \SetNlSkip{1em}% 行号与算法语句之间间距
+% 2.3 控制算法环境与前后正文的距离
+\SetAlgoSkip{0pt}% 设置算法环境与前后文本的间距（可选值：smallskip, medskip, bigskip 或具体尺寸）
+\SetAlgoInsideSkip{0pt}% 设置算法内部各元素之间的间距
 
 
 \renewcommand{\algocf@captiontext}[2]{\wuhao#1\algocf@typo ~ #2}
